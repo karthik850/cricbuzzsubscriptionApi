@@ -1,9 +1,10 @@
 from typing_extensions import Required
 from django.db import models
 from tinymce.models import HTMLField
+from django.contrib.auth.models import User
 
 
-
+#holds all subcription details
 class SubscriptionPlanTable(models.Model):
     planName = models.CharField(max_length=100);
     planDescription = models.CharField(max_length=100)
@@ -14,6 +15,7 @@ class SubscriptionPlanTable(models.Model):
     def __str__(self):
         return self.planName
 
+#holds benefitsdetails
 class BenefitsTable(models.Model):
     selectedPlan = models.ManyToManyField(SubscriptionPlanTable, related_name="selectedPlan")
     Name = models.CharField(max_length=100)
@@ -25,4 +27,12 @@ class BenefitsTable(models.Model):
 
     def __str__(self):
         return self.Name
+
+#holds usersubcription details  
+class userSubscriptionTable(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="student")
+    subscribed = models.ManyToManyField(SubscriptionPlanTable, related_name="subscribed")
+
+
+
     
